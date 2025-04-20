@@ -36,19 +36,56 @@ Group
 ---
 ### Outline
 
-* Intoduction
+* Intoduction - Market Guided
 * MASTER - AAAI'24
 * Motivation & Innovation
 * Problem Definition
 
 ---
-### Introduction
-* 
+### Introduction - Market Guided
+Stock prediction features can be divided into two types:
+1. Individual Stock Features: 
+    * Open price, close price, etc.
+    * Trading volume
+2. Shared market features:
+    * Market index
+    * Macroeconomic indicators, e.g. interest rate
+
+---
+<style>
+img[alt~="top-right"] {
+  position: absolute;
+  top: 280px;
+  right: 80px;
+}
+</style>
+
+### Introduction - Market Guided
+The market feature impacts the effectiveness of other features.
+
+**Example: Short Selling**
+When investors believe a stock is overvalued.
+1. Borrow stock, sell at high price.
+2. Buy back at lower price when it falls.
+3. Return to owner.
+![top-right height:300px](Images/ShortSelling.png)
+
+---
+### Introduction - Market Guided
+The market feature impacts the effectiveness of other features.
+
+**Example: Short Selling**
+Effectiveness in different market status:
+* Bull Market: Short selling loses money, less concern.
+* Bear Market: Short selling signals pessimism, more significant.
+
+**→ Using market status to select relevant features.**
 
 ---
 ### MASTER:Market-Guided Stock Transformer for Stock Price Forecasting <sup>[1]</sup>
+![height:350px center](./Images/MasterOverview.png)
 
-<!-- _footer: '[1] <a href="https://ojs.aaai.org/index.php/AAAI/article/view/27767">MASTER:Market-Guided Stock Transformer for Stock Price Forecasting</a>' -->
+<!-- _footer: '[1] <a href="https://ojs.aaai.org/index.php/AAAI/article/view/27767">MASTER:Market-Guided Stock Transformer for Stock Price Forecasting -AAAI 24</a>' -->
 ---
 ### Motivation & Innovation
 
