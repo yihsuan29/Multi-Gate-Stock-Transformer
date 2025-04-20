@@ -87,10 +87,34 @@ Effectiveness in different market status:
 
 <!-- _footer: '[1] <a href="https://ojs.aaai.org/index.php/AAAI/article/view/27767">MASTER:Market-Guided Stock Transformer for Stock Price Forecasting -AAAI 24</a>' -->
 ---
-### Motivation & Innovation
+### Motivation
+Stock price forecasting remains high volatility and complex dependencies in financial markets. two critical limitations:
+
+1. **Incomplete correlation modeling**: 
+Existing methods miss that real-world stock correlations are:
+   - Often momentary rather than persistent
+   - Cross-time with varied delays
+   - Dynamically important under different market conditions
+
+2. **Isolated data sources**: Models typically rely on either technical indicators or news events
 
 ---
+### Innovation
+
+![height:350px center](./Images/overall.png)
+
+- **MASTER**: dynamic stock correlations with market-guided feature
+- **CausalStock**: relationships between stocks using news data
+---
 ### Problem Definition
+Given a set of stocks $S$ with features $x_{u,t} \in \mathbb{R}^F$ collected at time steps $t \in [1, \tau]$:
+
+For each stock, we consider:
+- Technical features (price, volume)
+- News-derived features
+- Causal relationships with other stocks
+
+The normalized return ratio $r_u = \text{Norm}_S((c_{u,\tau+d} - c_{u,\tau+1})/c_{u,\tau+1})$ represents our prediction target.
 
 ---
 ### Data Description
@@ -111,3 +135,11 @@ MASTER:Market-Guided Stock Transformer for Stock Price Forecasting <sup>[1]</sup
 ---
 ### Example of insert images
 ![height:400px center](./Images/1.png)
+
+---
+### References
+
+[1] Li, T., Liu, Z., Shen, Y., Wang, X., Chen, H., & Huang, S. (2024). MASTER: Market-Guided Stock Transformer for Stock Price Forecasting. In Proceedings of the AAAI Conference on Artificial Intelligence, 38(1), 162-170.
+
+[2] Xie, J., Zhang, Y., Gong, X., Huang, J., Li, Z., Qin, B., & Liu, T. (2023). CausalStock: Deep End-to-end Causal Discovery for News-driven Stock Movement Prediction. In Proceedings of the 46th International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR '23) (pp. 2320-2329). ACM.
+
