@@ -119,6 +119,46 @@ The normalized return ratio $r_u = \text{Norm}_S((c_{u,\tau+d} - c_{u,\tau+1})/c
 ---
 ### Data Description
 
+The dataset for inpput of this study consists of the following data:
+  - **Stock prices**
+  - **Industry**
+  - **Market index**
+  - **Economic indicator**
+  - **Sentimental scores**
+
+
+---
+### Data Description (cont.)
+- **Stock Price**:
+Using the S&P 500 constituents as our base, we classify stocks into 12 categories following the Fama-French industry classification [3].
+
+  From each category, 8 companies are selected based on market capitalization, resulting in a total of 96 firms. 
+  
+  For each selected company, we collect daily stock data, including open, high, low, and close prices and trading volume.
+---
+### Data Description (cont.)
+- **Industry**:
+The industry returns are derived from the Fama-French 12 industry classification dataset.
+- **Market Index**: 
+S&P 500 market index
+
+- **Economic Indicators**:
+We use interest as our economic indicator.
+
+- **Sentimental Scores**:
+Daily news sentiment from RavenPack [4] is used to measure its impact on the market and stocks.
+---
+### Data Description (cont.)
+|NAME|NUMBER|TRAINING|TEST|SOURCE|
+|:-:|:-:|--|--|:-:|
+|Stock Price|96 * 5|2010 - 2022|2023|WRDS - CRSP|
+|Industry|12|2010 - 2022|2023|Fama-French|
+|Market Index|1|2010 - 2022|2023|CRSP|
+|Economic Indicators|1|2010 - 2022|2023|VIX|
+|Sentimental Scores|6|2010 - 2022|2023|Ravenpack|
+
+
+
 ---
 ### Example of footer
 MASTER:Market-Guided Stock Transformer for Stock Price Forecasting <sup>[1]</sup>
