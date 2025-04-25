@@ -29,7 +29,7 @@ style: |
 <!-- _paginate: tfalse -->
 
 ## <br><br>DLP Final Project Prposal:<br>Market Guided Stock Transformer<br>
-Group
+Group 7
 10705009 陳重光、313551047 陳以瑄、313554043 戴明貴 
 
 
@@ -86,8 +86,34 @@ Effectiveness in different market status:
 ![height:350px center](./Images/MasterOverview.png)
 
 <!-- _footer: '[1] <a href="https://ojs.aaai.org/index.php/AAAI/article/view/27767">MASTER:Market-Guided Stock Transformer for Stock Price Forecasting -AAAI 24</a>' -->
+
 ---
-### Motivation
+### Limitation
+Master: 想像得很完美，可是做的很簡陋
+Market guided gating:
+guide 的指標: only market index price & volume
+被guide的feature: 只有各種window的price mean, stddev
+=> 他的scalar 只是看說在哪個時間的股價是最重要的
+
+---
+### Idea 1
+我們希望加入更多的guide 的指標:
+圖
+
+![height:350px center](./Images/Screenshot_1.png)
+
+---
+### Idea 2
+經驗來說類股會有差，所以加入Famma12股票產業別
+
+--- 
+### Idea 3
+先學上下游，篩選相關的新聞加入為feature
+![height:350px center](./Images/innovation.png)
+
+- **MASTER**: dynamic stock correlations with market-guided feature
+- **FinDKG**: company relationships to identify business partners
+
 Stock price forecasting methods face significant limitations in capturing the complete financial ecosystem:
 
 **Isolated data sources**: 
@@ -109,16 +135,17 @@ Models typically rely on either technical indicators or news events
 Given a set of stocks $S$ with features $x_{u,t} \in \mathbb{R}^F$ collected at time steps $t \in [1, \tau]$:
 
 For each stock, we consider:
-- Technical features (price, volume)
-- News-derived features
-- Causal relationships with other stocks
+- Individual stock features (price, volume)
+- Shared market features(market index, macroeconomic indicators)
+- Industry-Level feature (return)
+- News-derived features (公司自己的，關聯企業的)
 
-The normalized return ratio $r_u = \text{Norm}_S((c_{u,\tau+d} - c_{u,\tau+1})/c_{u,\tau+1})$ is prediction target.
+Output: The normalized return ratio $r_u = \text{Norm}_S((c_{u,\tau+d} - c_{u,\tau+1})/c_{u,\tau+1})$ is prediction target.
 
 ---
 ### Data Description
 
-The dataset for inpput of this study consists of the following data:
+The dataset for input of this study consists of the following data:
   - **Stock prices**
   - **Industry**
   - **Market index**
@@ -134,6 +161,7 @@ Using the S&P 500 constituents as our base, we classify stocks into 12 categorie
   From each category, 8 companies are selected based on market capitalization, resulting in a total of 96 firms. 
   
   For each selected company, we collect daily stock data, including open, high, low, and close prices and trading volume.
+
 ---
 ### Data Description (cont.)
 - **Industry**:
@@ -146,6 +174,7 @@ We use interest as our economic indicator.
 
 - **Sentimental Scores**:
 Daily news sentiment from RavenPack [4] is used to measure its impact on the market and stocks.
+
 ---
 ### Data Description (cont.)
 |NAME|NUMBER|TRAINING|TEST|SOURCE|
@@ -156,7 +185,10 @@ Daily news sentiment from RavenPack [4] is used to measure its impact on the ma
 |Economic Indicators|1|2010 - 2022|2023|VIX|
 |Sentimental Scores|6|2010 - 2022|2023|Ravenpack|
 
-
+---
+### Expected result
+因為換了股票(中國=>美股)，所以related work的無法參考
+但是我們希望比較有無gate的差別。
 
 ---
 ### Example of footer
