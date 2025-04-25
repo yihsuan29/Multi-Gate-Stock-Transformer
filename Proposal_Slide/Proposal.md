@@ -88,23 +88,22 @@ Effectiveness in different market status:
 <!-- _footer: '[1] <a href="https://ojs.aaai.org/index.php/AAAI/article/view/27767">MASTER:Market-Guided Stock Transformer for Stock Price Forecasting -AAAI 24</a>' -->
 ---
 ### Motivation
-Stock price forecasting remains high volatility and complex dependencies in financial markets. two critical limitations:
+Stock price forecasting methods face significant limitations in capturing the complete financial ecosystem:
 
-1. **Incomplete correlation modeling**: 
-Existing methods miss that real-world stock correlations are:
-   - Often momentary rather than persistent
-   - Cross-time with varied delays
-   - Dynamically important under different market conditions
+**Isolated data sources**: 
 
-2. **Isolated data sources**: Models typically rely on either technical indicators or news events
-
+Models typically rely on either technical indicators or news events
+- Supply chain relationships between companies
+- Cross-company news undetected influence 
+- Industry-wide effects
+**→ approach incorporating cross-company dynamics**
 ---
 ### Innovation
 
-![height:350px center](./Images/overall.png)
+![height:350px center](./Images/innovation.png)
 
 - **MASTER**: dynamic stock correlations with market-guided feature
-- **CausalStock**: relationships between stocks using news data
+- **FinDKG**: company relationships to identify business partners
 ---
 ### Problem Definition
 Given a set of stocks $S$ with features $x_{u,t} \in \mathbb{R}^F$ collected at time steps $t \in [1, \tau]$:
@@ -114,7 +113,7 @@ For each stock, we consider:
 - News-derived features
 - Causal relationships with other stocks
 
-The normalized return ratio $r_u = \text{Norm}_S((c_{u,\tau+d} - c_{u,\tau+1})/c_{u,\tau+1})$ represents our prediction target.
+The normalized return ratio $r_u = \text{Norm}_S((c_{u,\tau+d} - c_{u,\tau+1})/c_{u,\tau+1})$ is prediction target.
 
 ---
 ### Data Description
