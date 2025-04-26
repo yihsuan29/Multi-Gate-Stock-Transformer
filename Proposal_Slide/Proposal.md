@@ -30,7 +30,7 @@ style: |
 
 ## <br><br>DLP Final Project Prposal:<br>Market Guided Stock Transformer<br>
 Group 7
-10705009 陳重光、313551047 陳以瑄、313554043 戴明貴 
+110705009 陳重光、313551047 陳以瑄、313554043 戴明貴 
 
 
 ---
@@ -96,19 +96,35 @@ guide 的指標: only market index price & volume
 => 他的scalar 只是看說在哪個時間的股價是最重要的
 
 ---
-### Idea 1
-我們希望加入更多的guide 的指標:
-圖
+### Limitation
 
-![height:350px center](./Images/Screenshot_1.png)
+ Restricted Guiding Indicators ( \( m_t \) )
+
+- Only market index prices and trading volumes are used as guiding indicators, failing to capture diverse market signals.
+
+Limited Guided Features ( \( x_{1,1} \) )
+
+- Only statistical features based on prices are guided, lacking rich market context information.
+
+Simplistic Scalar Attention
+
+- Importance is assigned only to temporal points, without modeling complex feature interactions.
+
+---
+### Idea 1
+Market-guided indicators expansion for richer market dynamics
+
+![height:350px center](./Images/idea1.png)
 
 ---
 ### Idea 2
-經驗來說類股會有差，所以加入Famma12股票產業別
+Industry-level features for sector-specific behavior capture
+
+![height:350px center](./Images/idea2.png)
 
 --- 
 ### Idea 3
-先學上下游，篩選相關的新聞加入為feature
+Supply chain and news features for enhanced forecasting
 ![height:350px center](./Images/innovation.png)
 
 - **MASTER**: dynamic stock correlations with market-guided feature
@@ -138,9 +154,9 @@ For each stock, we consider:
 - Individual stock features (price, volume)
 - Shared market features(market index, macroeconomic indicators)
 - Industry-Level feature (return)
-- News-derived features (公司自己的，關聯企業的)
+- News-derived features (company and related party)
 
-Output: The normalized return ratio $r_u = \text{Norm}_S((c_{u,\tau+d} - c_{u,\tau+1})/c_{u,\tau+1})$ is prediction target.
+Output: The return ratio $r_u = \text{Norm}_S((c_{u,\tau+d} - c_{u,\tau+1})/c_{u,\tau+1})$
 
 ---
 ### Data Description
