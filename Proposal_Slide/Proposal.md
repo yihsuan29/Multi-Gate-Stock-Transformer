@@ -68,6 +68,9 @@ When investors believe a stock is overvalued.
 1. Borrow stock, sell at high price.
 2. Buy back at lower price when it falls.
 3. Return to owner.
+
+Short selling interest:<br>the amount of stocks being short.
+
 ![top-right height:300px](Images/ShortSelling.png)
 
 ---
@@ -89,14 +92,16 @@ Effectiveness in different market status:
 
 ---
 ### Limitation
-Master: 想像得很完美，可是做的很簡陋
-Market guided gating:
-guide 的指標: only market index price & volume
-被guide的feature: 只有各種window的price mean, stddev
-=> 他的scalar 只是看說在哪個時間的股價是最重要的
+Simple Representation of Market Status:
+Only market index prices and trading volumes are used as inputs.
 
----
-### Limitation
+Improvements: Expanding Shared Market Features
+1. Macroeconomic features
+2. Industry-level features
+3. News-based features
+
+
+<!-- ### Limitation
 
  Restricted Guiding Indicators ( \( m_t \) )
 
@@ -108,7 +113,7 @@ Limited Guided Features ( \( x_{1,1} \) )
 
 Simplistic Scalar Attention
 
-- Importance is assigned only to temporal points, without modeling complex feature interactions.
+- Importance is assigned only to temporal points, without modeling complex feature interactions. -->
 
 ---
 ### Idea 1
@@ -139,13 +144,12 @@ Models typically rely on either technical indicators or news events
 - Cross-company news undetected influence 
 - Industry-wide effects
 **→ approach incorporating cross-company dynamics**
----
-### Innovation
+<!-- ### Innovation
 
 ![height:350px center](./Images/innovation.png)
 
 - **MASTER**: dynamic stock correlations with market-guided feature
-- **FinDKG**: company relationships to identify business partners
+- **FinDKG**: company relationships to identify business partners -->
 ---
 ### Problem Definition
 Given a set of stocks $S$ with features $x_{u,t} \in \mathbb{R}^F$ collected at time steps $t \in [1, \tau]$:
@@ -186,7 +190,7 @@ The industry returns are derived from the Fama-French 12 industry classification
 S&P 500 market index
 
 - **Economic Indicators**:
-We use interest as our economic indicator.
+We use the VIX, interest rates, and other economic indicators
 
 - **Sentimental Scores**:
 Daily news sentiment from RavenPack [4] is used to measure its impact on the market and stocks.
@@ -198,30 +202,17 @@ Daily news sentiment from RavenPack [4] is used to measure its impact on the ma
 |Stock Price|96 * 5|2010 - 2022|2023|WRDS - CRSP|
 |Industry|12|2010 - 2022|2023|Fama-French|
 |Market Index|1|2010 - 2022|2023|CRSP|
-|Economic Indicators|1|2010 - 2022|2023|VIX|
+|Economic Indicators|1|2010 - 2022|2023|VIX, FRED|
 |Sentimental Scores|6|2010 - 2022|2023|Ravenpack|
 
 ---
 ### Expected result
-因為換了股票(中國=>美股)，所以related work的無法參考
-但是我們希望比較有無gate的差別。
+Due to the change in the set of stocks used  (from Chinese stocks to U.S. stocks), prior related works are no longer directly applicable.
 
----
-### Example of footer
-MASTER:Market-Guided Stock Transformer for Stock Price Forecasting <sup>[1]</sup>
+We aim to compare performance between:
+1. The original version of MASTER
+2. MASTER with three improvements
 
-<!-- _footer: '[1] <a href="https://ojs.aaai.org/index.php/AAAI/article/view/27767">MASTER:Market-Guided Stock Transformer for Stock Price Forecasting</a>' -->
-
----
-### Example of table
-|OFTIC|ACTDATS|ESTIMID|ALYSNAM|HORIZON|VALUE|ESTCUR|
-|--|--|--|--|--|--|--|
-|GOOGL|2015-10-23|GOLDMAN|BELLINI, CFA H|12|42.50|USD|
-|2330|2014-10-21|CSCFH|CHEN L| 3|140.000|TWD|
-
----
-### Example of insert images
-![height:400px center](./Images/1.png)
 
 ---
 ### References
