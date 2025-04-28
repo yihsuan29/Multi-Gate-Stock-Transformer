@@ -25,6 +25,7 @@ style: |
     .col{
         flex: 1;
     }
+  
 ---
 <!-- _paginate: tfalse -->
 
@@ -178,7 +179,7 @@ The dataset for input of this study consists of the following data:
 - **Stock Price**:
 Using the S&P 500 constituents as our base, we classify stocks into 12 categories following the Fama-French industry classification [3].
 
-  From each category, 8 companies are selected based on market capitalization, resulting in a total of 96 firms. 
+  From each category, 8 companies are selected based on their book value, resulting in a total of 96 firms. 
   
   For each selected company, we collect daily stock data, including open, high, low, and close prices and trading volume.
 
@@ -207,12 +208,16 @@ Daily news sentiment from RavenPack [4] is used to measure its impact on the ma
 
 ---
 ### Expected result
+![alt text](image.png)
+
+---
+
+### Expected result (cont.)
 Due to the change in the set of stocks used  (from Chinese stocks to U.S. stocks), prior related works are no longer directly applicable.
 
 We aim to compare performance between:
 1. The original version of MASTER
 2. MASTER with three improvements
-
 
 ---
 ### References
@@ -220,4 +225,12 @@ We aim to compare performance between:
 [1] Li, T., Liu, Z., Shen, Y., Wang, X., Chen, H., & Huang, S. (2024). MASTER: Market-Guided Stock Transformer for Stock Price Forecasting. In Proceedings of the AAAI Conference on Artificial Intelligence, 38(1), 162-170.
 
 [2] Xie, J., Zhang, Y., Gong, X., Huang, J., Li, Z., Qin, B., & Liu, T. (2023). CausalStock: Deep End-to-end Causal Discovery for News-driven Stock Movement Prediction. In Proceedings of the 46th International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR '23) (pp. 2320-2329). ACM.
+
+--- 
+### References (cont.)
+
+[3] Fama, E. F., & French, K. R. (1997). Industry costs of equity. Journal of financial economics, 43(2), 153-193.
+
+---
+# <div align="center" style="height: 100vh; display: flex; justify-content: center; align-items: center;">Thank you for listening.</div>
 
