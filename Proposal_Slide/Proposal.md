@@ -39,8 +39,8 @@ Group 7
 
 * Intoduction - Market Guided
 * MASTER - AAAI'24
-* Motivation & Innovation
-* Problem Definition
+* Method
+* Dataset
 
 ---
 ### Introduction - Market Guided
@@ -232,5 +232,10 @@ We aim to compare performance between:
 [3] Fama, E. F., & French, K. R. (1997). Industry costs of equity. Journal of financial economics, 43(2), 153-193.
 
 ---
-# <div align="center" style="height: 100vh; display: flex; justify-content: center; align-items: center;">Thank you for listening.</div>
+<br>
+<br>
+<br>
+<br>
+
+# Thank you for listening.
 
