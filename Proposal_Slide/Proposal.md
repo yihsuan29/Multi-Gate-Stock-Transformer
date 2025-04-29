@@ -130,26 +130,11 @@ Industry-level features for sector-specific behavior capture
 --- 
 ### Idea 3
 Supply chain and news features for enhanced forecasting
-![height:350px center](./Images/innovation.png)
+![height:350px center](./Images/idea3.png)
 
-- **MASTER**: dynamic stock correlations with market-guided feature
+
 - **FinDKG**: company relationships to identify business partners<sup>[2]</sup>
 
-Stock price forecasting methods face significant limitations in capturing the complete financial ecosystem:
-
-**Isolated data sources**: 
-
-Models typically rely on either technical indicators or news events
-- Supply chain relationships between companies
-- Cross-company news undetected influence 
-- Industry-wide effects
-**→ approach incorporating cross-company dynamics**
-<!-- ### Innovation
-
-![height:350px center](./Images/innovation.png)
-
-- **MASTER**: dynamic stock correlations with market-guided feature
-- **FinDKG**: company relationships to identify business partners -->
 ---
 ### Problem Definition
 Given a set of stocks $S$ with features $x_{u,t} \in \mathbb{R}^F$ collected at time steps $t \in [1, \tau]$:
