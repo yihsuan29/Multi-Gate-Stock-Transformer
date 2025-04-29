@@ -131,8 +131,7 @@ The industry flag is then used to select the relevant gate.
 ### Idea 3 - News-Based Features
 Use FinDKG<sup>[2]</sup> to identify business partners
 Then use the firm correlation to select the relevant news.
-
-![height:350px center](./Images/idea3.png)
+![height:400px center](./Images/idea3.png)
 
 ---
 ### Problem Definition
