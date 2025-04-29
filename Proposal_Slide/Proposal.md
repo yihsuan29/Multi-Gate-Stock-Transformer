@@ -116,25 +116,24 @@ Simplistic Scalar Attention
 - Importance is assigned only to temporal points, without modeling complex feature interactions. -->
 
 ---
-### Idea 1
+### Idea 1 - Expand Market Features
 Market-guided indicators expansion for richer market dynamics
 
 ![height:350px center](./Images/idea1.png)
 
 ---
-### Idea 2
-Industry-level features for sector-specific behavior capture
+### Idea 2 - Industry-Level Features
+Industry-level features to capture industry-specific behavior 
 
-![height:350px center](./Images/idea2.png)
+![height:400px center](./Images/idea2.png)
 
 --- 
-### Idea 3
-Supply chain and news features for enhanced forecasting
+### Idea 3 - News-Based Features
+Use the firm correlation to select the relevant news.
 
 ![height:350px center](./Images/idea3.png)
 
-
-- **FinDKG**: company relationships to identify business partners<sup>[2]</sup>
+**FinDKG**: company relationships to identify business partners<sup>[2]</sup>
 
 ---
 ### Problem Definition
@@ -165,7 +164,7 @@ The dataset for input of this study consists of the following data:
   * **Base**: S&P 500 constituents
   * **Industry classification**: base on the Fama-French 12 industry <sup>[3]</sup>.
   * **Number of stocks**: 8 firms * 12 industries = 96 firms
-  * **Stock feature (daily)**:
+  * **Daily stock features**:
     1. price: open, high, low, close prices
     2. volume: trading volume
     3. others: short selling interest, etc.
