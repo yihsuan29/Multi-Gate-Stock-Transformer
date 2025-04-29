@@ -130,6 +130,7 @@ Industry-level features for sector-specific behavior capture
 --- 
 ### Idea 3
 Supply chain and news features for enhanced forecasting
+
 ![height:350px center](./Images/idea3.png)
 
 
