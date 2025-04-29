@@ -48,7 +48,7 @@ Stock prediction features can be divided into two types:
 1. Individual Stock Features: 
     * Open price, close price, etc.
     * Trading volume
-2. Shared market features:
+2. Shared Market Features:
     * Market index
     * Macroeconomic indicators, e.g. interest rate
 
