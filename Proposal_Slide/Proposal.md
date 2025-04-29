@@ -70,9 +70,9 @@ When investors believe a stock is overvalued.
 2. Buy back at lower price when it falls.
 3. Return to owner.
 
-Short selling interest:<br>the amount of stocks being short.
+Short selling interest: the amount of stocks being short.
 
-![top-right height:300px](Images/ShortSelling.png)
+![top-right height:250px](Images/ShortSelling.png)
 
 ---
 ### Introduction - Market Guided
@@ -80,8 +80,8 @@ The market feature impacts the effectiveness of other features.
 
 **Example: Short Selling**
 Effectiveness in different market status:
-* Bull Market: Short selling loses money, less concern.
-* Bear Market: Short selling signals pessimism, more significant.
+* Bull Market: short selling loses money, less concern.
+* Bear Market: short selling signals pessimism, more significant.
 
 **→ Using market status to select relevant features.**
 
@@ -177,24 +177,26 @@ The dataset for input of this study consists of the following data:
 ---
 ### Data Description (cont.)
 - **Stock Price**:
-Using the S&P 500 constituents as our base, we classify stocks into 12 categories following the Fama-French industry classification [3].
-
-  From each category, 8 companies are selected based on their book value, resulting in a total of 96 firms. 
-  
-  For each selected company, we collect daily stock data, including open, high, low, and close prices and trading volume.
+  * Base: S&P 500 constituents
+  * Industry classification: base on the Fama-French 12 industry [3].
+  * Number of stocks: 8 firms * 12 industries = 96 firms
+  * Stock feature (daily):
+    1. price: open, high, low, close prices
+    2. volume: trading volume
+    3. others: short selling interest, etc.
 
 ---
 ### Data Description (cont.)
 - **Industry**:
-The industry returns are derived from the Fama-French 12 industry classification dataset.
+The Fama-French 12 industry returns.
 - **Market Index**: 
 S&P 500 market index
 
 - **Economic Indicators**:
-We use the VIX, interest rates, and other economic indicators
+VIX, interest rates, and other economic indicators
 
 - **Sentimental Scores**:
-Daily news sentiment from RavenPack [4] is used to measure its impact on the market and stocks.
+News sentiment score from RavenPack [4]
 
 ---
 ### Data Description (cont.)
@@ -213,7 +215,8 @@ Daily news sentiment from RavenPack [4] is used to measure its impact on the ma
 ---
 
 ### Expected result (cont.)
-Due to the change in the set of stocks used  (from Chinese stocks to U.S. stocks), prior related works are no longer directly applicable.
+The set of stocks has changed from Chinese stocks to U.S. stocks
+ → Prior related works are no longer directly applicable.
 
 We aim to compare performance between:
 1. The original version of MASTER
