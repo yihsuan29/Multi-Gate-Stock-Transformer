@@ -123,17 +123,16 @@ Market-guided indicators expansion for richer market dynamics
 
 ---
 ### Idea 2 - Industry-Level Features
-Industry-level features to capture industry-specific behavior 
-
+Each industry learns a different gate to capture its specific behavior.
+The industry flag is then used to select the relevant gate.
 ![height:400px center](./Images/idea2.png)
 
 --- 
 ### Idea 3 - News-Based Features
-Use the firm correlation to select the relevant news.
+Use FinDKG<sup>[2]</sup> to identify business partners
+Then use the firm correlation to select the relevant news.
 
 ![height:350px center](./Images/idea3.png)
-
-**FinDKG**: company relationships to identify business partners<sup>[2]</sup>
 
 ---
 ### Problem Definition
