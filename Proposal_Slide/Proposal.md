@@ -89,8 +89,6 @@ Effectiveness in different market status:
 ### MASTER:Market-Guided Stock Transformer for Stock Price Forecasting <sup>[1]</sup>
 ![height:350px center](./Images/MasterOverview.png)
 
-<!-- _footer: '[1] <a href="https://ojs.aaai.org/index.php/AAAI/article/view/27767">MASTER:Market-Guided Stock Transformer for Stock Price Forecasting -AAAI 24</a>' -->
-
 ---
 ### Limitation
 Simple Representation of Market Status:
@@ -134,7 +132,7 @@ Supply chain and news features for enhanced forecasting
 ![height:350px center](./Images/innovation.png)
 
 - **MASTER**: dynamic stock correlations with market-guided feature
-- **FinDKG**: company relationships to identify business partners
+- **FinDKG**: company relationships to identify business partners<sup>[2]</sup>
 
 Stock price forecasting methods face significant limitations in capturing the complete financial ecosystem:
 
@@ -177,10 +175,10 @@ The dataset for input of this study consists of the following data:
 ---
 ### Data Description (cont.)
 - **Stock Price**:
-  * Base: S&P 500 constituents
-  * Industry classification: base on the Fama-French 12 industry [3].
-  * Number of stocks: 8 firms * 12 industries = 96 firms
-  * Stock feature (daily):
+  * **Base**: S&P 500 constituents
+  * **Industry classification**: base on the Fama-French 12 industry <sup>[3]</sup>.
+  * **Number of stocks**: 8 firms * 12 industries = 96 firms
+  * **Stock feature (daily)**:
     1. price: open, high, low, close prices
     2. volume: trading volume
     3. others: short selling interest, etc.
@@ -196,7 +194,7 @@ S&P 500 market index
 VIX, interest rates, and other economic indicators
 
 - **Sentimental Scores**:
-News sentiment score from RavenPack [4]
+News sentiment score from RavenPack
 
 ---
 ### Data Description (cont.)
@@ -227,7 +225,7 @@ We aim to compare performance between:
 
 [1] Li, T., Liu, Z., Shen, Y., Wang, X., Chen, H., & Huang, S. (2024). MASTER: Market-Guided Stock Transformer for Stock Price Forecasting. In Proceedings of the AAAI Conference on Artificial Intelligence, 38(1), 162-170.
 
-[2] Xie, J., Zhang, Y., Gong, X., Huang, J., Li, Z., Qin, B., & Liu, T. (2023). CausalStock: Deep End-to-end Causal Discovery for News-driven Stock Movement Prediction. In Proceedings of the 46th International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR '23) (pp. 2320-2329). ACM.
+[2] Li, X. V., & Sanna Passino, F. (2024). FinDKG: Dynamic Knowledge Graphs with Large Language Models for Detecting Global Trends in Financial Markets. In Proceedings of the 5th ACM International Conference on AI in Finance (ICAIF '24) (pp. 573–581). 
 
 --- 
 ### References (cont.)
