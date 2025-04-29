@@ -41,6 +41,7 @@ Group 7
 * MASTER - AAAI'24
 * Method
 * Dataset
+* Expected Result
 
 ---
 ### Introduction - Market Guided
