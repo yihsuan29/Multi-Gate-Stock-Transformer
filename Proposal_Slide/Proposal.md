@@ -101,20 +101,6 @@ Improvements: Expanding Shared Market Features
 3. News-based features
 
 
-<!-- ### Limitation
-
- Restricted Guiding Indicators ( \( m_t \) )
-
-- Only market index prices and trading volumes are used as guiding indicators, failing to capture diverse market signals.
-
-Limited Guided Features ( \( x_{1,1} \) )
-
-- Only statistical features based on prices are guided, lacking rich market context information.
-
-Simplistic Scalar Attention
-
-- Importance is assigned only to temporal points, without modeling complex feature interactions. -->
-
 ---
 ### Idea 1 - Expand Market Features
 Market-guided indicators expansion for richer market dynamics
@@ -140,8 +126,8 @@ Given a set of stocks $S$ with features $x_{u,t} \in \mathbb{R}^F$ collected at 
 For each stock, we consider:
 - Individual stock features (price, volume)
 - Shared market features(market index, macroeconomic indicators)
-- Industry-Level feature (return)
-- News-derived features (company and related party)
+- Industry-Level feature (industry return)
+- News-derived features (the firm and related party)
 
 Output: The return ratio $r_u = \text{Norm}_S((c_{u,\tau+d} - c_{u,\tau+1})/c_{u,\tau+1})$
 
@@ -157,18 +143,17 @@ The dataset for input of this study consists of the following data:
 
 
 ---
-### Data Description (cont.)
-- **Stock Price**:
-  * **Base**: S&P 500 constituents
-  * **Industry classification**: base on the Fama-French 12 industry <sup>[3]</sup>.
-  * **Number of stocks**: 8 firms * 12 industries = 96 firms
-  * **Daily stock features**:
-    1. price: open, high, low, close prices
-    2. volume: trading volume
-    3. others: short selling interest, etc.
+### Data Description  - Stock Price
+* **Base**: S&P 500 constituents
+* **Industry classification**: base on the Fama-French 12 industry <sup>[3]</sup>.
+* **Number of stocks**: 8 firms * 12 industries = 96 firms
+* **Daily stock features**:
+  1. price: open, high, low, close prices
+  2. volume: trading volume
+  3. others: short selling interest, etc.
 
 ---
-### Data Description (cont.)
+### Data Description - Others
 - **Industry**:
 The Fama-French 12 industry returns.
 - **Market Index**: 
