@@ -28,15 +28,17 @@ style: |
 ---
 <!-- _paginate: tfalse -->
 
-## <br><br> MASTER:Market-Guided Stock Transformer for Stock Price Forecasting
+## <br><br> MASTER:Market-Guided Stock Transformer for Stock Price Forecasting<sup>[1]</sup>
 Group 7
 110705009 陳重光、313551047 陳以瑄、313554043 戴明貴 
 
 ---
 ### Outline
-* **Introduction**
-* **Method**
-* **Experienment**
+* Introduction & Main Purpose
+* Related Work - Yoo et al., KDD 2021
+* Method
+* Experienment & Ablation Study
+* Conclusion
 
 ---
 ### Intro - Dynamic Stock Correlation Modeling
@@ -57,17 +59,17 @@ This study aims to model two phenomena:
 1. Market status influence on feature relevance
 2. Momentary and cross-time stock correlations
 
-Both issues are limitations identified in Yoo et al. (KDD 2021).
+Both issues are limitations identified in Yoo et al. (KDD 2021).<sup>[2]</sup>
 
 ---
 ### Related Work – Yoo et al., KDD 2021
-**Accurate Multivariate Stock Movement Prediction via Data-Axis Transformer with Multi-Level Contexts**
+Accurate Multivariate Stock Movement Prediction via Data-Axis Transformer with Multi-Level Contexts
 ![height:400px center](./Images/Yoo.png)
 
 ---
 ### Related Work (Cont.)
 **Part 1: Time Axis Attention**
-Single stock time series → Attention LSTM → Summarized embedding
+Single stock time series→ Attention LSTM→ Summarized embedding
 
 ![height:400px center](./Images/Yoo1.png)
 
@@ -124,7 +126,7 @@ Stocks often respond to the same external factors at different times.
 ![height:400px center](./Images/MASTER_EDITED.png)
 
 ---
-### Market-Guided Gating
+### Step1: Market-Guided Gating
 **Idea:** adaptively select and scale features based on market conditions
 ![height:400px center](./Images/MASTER_1.png)
 
@@ -151,7 +153,7 @@ Stocks often respond to the same external factors at different times.
 Captures how market status influences the usefulness of features.
 
 ---
-### Intra-Stock Aggregation
+### Step2: Intra-Stock Aggregation
 **Idea:** Single stock behavior is continuous → a simpler distribution
 ![height:400px center](./Images/MASTER_2.png)
 
@@ -175,7 +177,7 @@ Captures how market status influences the usefulness of features.
 * Output: Time-aware feature embeddings $h_{u,t}$ for each time step
 
 ---
-### Inter-Stock Aggregation
+### Step3: Inter-Stock Aggregation
 **Idea:** Capture the momentary stock correlation at each time step.
 ![height:400px center](./Images/MASTER_3.png)
 
@@ -192,13 +194,13 @@ Captures how market status influences the usefulness of features.
 * Output: Temporal embedding $z_{u,t}$ for each stock
 
 ---
-### Inter-Stock & Intra-Stock Aggregations
+### Step 2+3: Inter-Stock & Intra-Stock Aggregations
 **Addresses Limitation 2:**
 Capture dynamic cross-stock correlations across time steps.
 ![height:400px center](./Images/MASTERLim2.png)
 
 ---
-### Temporal Aggregation
+### Step 4: Temporal Aggregation
 **Idea:** Summarize the obtained temporal embeddings.
 ![height:400px center](./Images/MASTER_4.png)
 
@@ -210,7 +212,7 @@ Capture dynamic cross-stock correlations across time steps.
   * Compute attention scores: $\lambda_{u,t} = \frac{\exp(z_{u,t}^T W_\lambda z_{u,\tau})}{\sum_{i \in [1,\tau]} \exp(z_{u,i}^T W_\lambda z_{u,\tau})}$
 * Aggregate embeddings: $e_u = \sum_{t \in [1,\tau]} \lambda_{u,t} z_{u,t}$
 ---
-### Prediction 
+### Step 5: Prediction 
 **Idea:** Use the stock embedding to predict the stock price.
 ![height:400px center](./Images/MASTER_5.png)
 
@@ -222,8 +224,7 @@ $\hat{r}_u = g(e_u)$, $g(.)$ is a linear layer for regression.
 * Ground truth return: 
 $r_{u}$ is the normalized return ratio
 
-* Loss Function: 
-$L=\sum_{u \in S}MSE(r_{u}, \hat{r}_{u})$
+* Loss Function: $L=\sum_{u \in S}MSE(r_{u}, \hat{r}_{u})$
 
 ---
 <style scoped>
@@ -300,5 +301,20 @@ For all metrics, higher values indicate better performance.
 * improves 13% on ranking metrics
 * improves 47% on portfolio-based metrics
 
+---
+### References
+
+[1] Li, T., Liu, Z., Shen, Y., Wang, X., Chen, H., and Huang, S. (2024). MASTER: Market-Guided Stock Transformer for Stock Price Forecasting. In Proceedings of the AAAI Conference on Artificial Intelligence, 38(1), 162-170.
+
+[2]Yoo, J., Soun, Y., Park, Y.-c., and Kang, U. (2021). Accurate multivariate stock movement prediction via data-axis transformer with multi-level contexts. In Proceedings of the 27th ACM SIGKDD Conference on Knowledge Discovery & Data Mining, 2037–2045.
+
+
+---
+<br>
+<br>
+<br>
+<br>
+
+# Thank you for listening.
 
 
