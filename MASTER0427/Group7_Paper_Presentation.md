@@ -28,8 +28,11 @@ style: |
 ---
 <!-- _paginate: tfalse -->
 
-## <br><br> MASTER:Market-Guided Stock Transformer for Stock Price Forecasting<sup>[1]</sup>
-Group 7
+## <br> MASTER:Market-Guided Stock Transformer for Stock Price Forecasting<sup>[1]</sup>
+Tong Li, Zhaoyang Liu, Yanyan Shen, Xue Wang, Haokun Chen, Sen Huang
+AAAI-24
+<br>
+Presented by Group 7
 110705009 陳重光、313551047 陳以瑄、313554043 戴明貴 
 
 ---
@@ -70,7 +73,6 @@ Accurate Multivariate Stock Movement Prediction via Data-Axis Transformer with M
 ### Related Work (Cont.)
 **Part 1: Time Axis Attention**
 Single stock time series→ Attention LSTM→ Summarized embedding
-
 ![height:400px center](./Images/Yoo1.png)
 
 ---
