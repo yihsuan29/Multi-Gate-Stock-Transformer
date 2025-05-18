@@ -23,7 +23,7 @@ def add_features(df):
     return df
 
 if __name__ == "__main__":
-    df_spy = pd.read_parquet('../Data/SP500/SP500.pqt')
+    df_spy = pd.read_parquet('../Data/Market/SP500/SP500.pqt')
     df_spy = df_spy.rename(columns={'Close': 'close', 'Volume': 'volume'})
 
     df_spy = df_spy.sort_index()
@@ -36,4 +36,4 @@ if __name__ == "__main__":
     for x in df_spy.columns:
         print(x)
         
-    df_spy.to_parquet('../Data/SP500/SP500_feature.pqt')
+    df_spy.to_parquet('../Data/Preprocessed/SP500_feature.pqt')

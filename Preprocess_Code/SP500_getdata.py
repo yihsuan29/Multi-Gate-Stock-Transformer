@@ -27,4 +27,4 @@ spy.columns.name = None
 
 print(spy.head(5))
 
-spy.to_parquet('../Data/SP500/SP500.pqt')
+spy.to_parquet('../Data/Market/SP500/SP500.pqt')
