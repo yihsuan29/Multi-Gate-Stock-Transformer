@@ -94,15 +94,28 @@ Integrates market information directly into stock representations.
 ![height:400px center](./Images/Yoo2.png)
 
 ---
+<style scoped>
+table tr, td{
+  background: transparent;
+  color: #455a64;
+  font-weight: normal;
+  --color-background-stripe: white;
+}
+</style>
 ###  Limitation 1 - Market Status and Feature Selection
 **What Is Missed:** 
 Market status influences which features are useful for prediction.
 
-**Example:**
-In bullish markets, investor optimism and capital inflow lead to:
-• Broader investment across sectors
-• Stronger cross-stock correlations
-→ Features like peer stock movements become more relevant
+**Example: Momentum**
+$\text{Momentum} = P − P_x$ , where $P_x$ is the price *x* days ago.
+→ Shows how fast a stock’s price is rising or falling.
+| **Market Status** | **Sentiment** | **Investor Behavior**             | **Effect on Momentum**          |
+|-------------------|----------------|-----------------------------------|---------------------------------|
+| **Bull Market**   | Optimism       | Chase strong performers           | Past winners keep winning |
+| **Bear Market**   | Pessimism      | Sell profitable stocks to cut risk | Past winners may reverse |
+
+
+
 
 ---
 ###  Limitation 2 - Cross-time Stock Correlation
@@ -215,7 +228,7 @@ Capture dynamic cross-stock correlations across time steps.
 * Aggregate embeddings: $e_u = \sum_{t \in [1,\tau]} \lambda_{u,t} z_{u,t}$
 ---
 ### Step 5: Prediction 
-**Idea:** Use the stock embedding to predict the stock price.
+**Idea:** Use the stock embedding to predict the stock return.
 ![height:400px center](./Images/MASTER_5.png)
 
 ---
