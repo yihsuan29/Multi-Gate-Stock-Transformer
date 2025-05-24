@@ -4,6 +4,8 @@ import pandas as pd
 Macro = pd.read_parquet('../Data/Market/Macro_daily.pqt')
 Macro['date'] = pd.to_datetime(Macro['date'])
 Macro = Macro[Macro['date'] >= '2007-01-01']
+for x in Macro.columns:
+    print(x)
 
 # Load news
 selected_columns = ['RPA_DATE_UTC','RELEVANCE','EVENT_SENTIMENT_SCORE'\
