@@ -25,4 +25,5 @@ if __name__ == "__main__":
     folder_path = '../Data/Preprocessed/'
     CRSP_df, Market_df, Ind_df, Fama_df = load_data(folder_path)
     merged = merge_data(CRSP_df, Market_df, Ind_df, Fama_df)
-    merged.to_parquet(os.path.join(folder_path, 'Merged_data.pqt'), index=False)
+    print(merged.tail(5))
+    #merged.to_parquet(os.path.join(folder_path, 'Merged_data.pqt'), index=False)
