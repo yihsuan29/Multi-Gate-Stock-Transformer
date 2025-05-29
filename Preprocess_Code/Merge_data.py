@@ -25,5 +25,10 @@ if __name__ == "__main__":
     folder_path = '../Data/Preprocessed/'
     CRSP_df, Market_df, Ind_df, Fama_df = load_data(folder_path)
     merged = merge_data(CRSP_df, Market_df, Ind_df, Fama_df)
-    print(merged.tail(5))
-    #merged.to_parquet(os.path.join(folder_path, 'Merged_data.pqt'), index=False)
+    filtered = merged[(merged['date'] > '2008-01-01') & (merged['date'] < '2023-12-31')]
+    for col in filtered.columns:
+        null_count = filtered[col].isnull().sum()
+        if null_count > 0:
+            print(f"Column '{col}' has {null_count} null values.")
+    # merged.to_parquet(os.path.join(folder_path, 'Merged_data.pqt'), index=False)
+    # merged.to_csv(os.path.join(folder_path, 'Merged_data.csv'), index=False)

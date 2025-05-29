@@ -199,19 +199,24 @@ class TemporalAttention(nn.Module):
 
 
 class MASTER(nn.Module):
-    def __init__(self, d_feat, d_model, t_nhead, s_nhead, T_dropout_rate, S_dropout_rate, gate_input_start_index, gate_input_end_index, beta,ind_index_column, ind_gate_input_start_index, ind_gate_input_end_index):
+    def __init__(self, d_feat, d_model, t_nhead, s_nhead, T_dropout_rate, S_dropout_rate,
+                 stock_start_index, stock_end_index,beta,
+                    gate_input_start_index, gate_input_end_index, 
+                    ind_index_column, ind_gate_start_index,ind_gate_end_index):
         super(MASTER, self).__init__()
         # market
+        self.stock_start_index = stock_start_index
+        self.stock_end_index = stock_end_index
         self.gate_input_start_index = gate_input_start_index
         self.gate_input_end_index = gate_input_end_index
-        self.d_gate_input = (gate_input_end_index - gate_input_start_index) # F'
+        self.d_gate_input = (gate_input_end_index - gate_input_start_index+1) # F'
         self.feature_gate = Gate(self.d_gate_input, d_feat, beta=beta)
         
         ### Ind Gate ##############################################################################
         self.ind_index_column = ind_index_column
-        self.ind_gate_input_start_index = ind_gate_input_start_index
-        self.ind_gate_input_end_index = ind_gate_input_end_index     
-        self.d_industry_input = (ind_gate_input_end_index - ind_gate_input_start_index)
+        self.ind_gate_start_index = ind_gate_start_index
+        self.ind_gate_end_index = ind_gate_end_index     
+        self.d_industry_input = (ind_gate_end_index - ind_gate_start_index +1)
         self.industry_gate = IndustryGate(
             n_industries=12,
             d_input=self.d_industry_input,
@@ -234,13 +239,13 @@ class MASTER(nn.Module):
         )
 
     def forward(self, x):
-        src = x[:, :, :self.gate_input_start_index] # N, T, D
-        gate_input = x[:, -1, self.gate_input_start_index:self.gate_input_end_index]
+        src = x[:, :, self.stock_start_index:self.stock_end_index +1] # N, T, D
+        gate_input = x[:, -1, self.gate_input_start_index:self.gate_input_end_index+1]
         alpha_market = self.feature_gate(gate_input)
         
         ### Ind Gate ##############################################################################
-        ind_ids = x[:, -1, self.industry_index_column].long() 
-        ind_input = x[:, -1, self.industry_status_start_index:self.industry_status_end_index] 
+        ind_ids = x[:, -1, self.ind_index_column].long() 
+        ind_input = x[:, -1, self.ind_gate_start_index: self.ind_gate_end_index+1] 
         alpha_industry = self.industry_gate(ind_input, ind_ids) 
 
         ###########################################################################################    
@@ -254,21 +259,23 @@ class MASTER(nn.Module):
 
 class MASTERModel(SequenceModel):
     def __init__(
-            self, d_feat, d_model, t_nhead, s_nhead, gate_input_start_index, gate_input_end_index,
-            ind_index_column, ind_gate_input_start_index, ind_gate_input_end_index,
+            self, d_feat, d_model, t_nhead, s_nhead, stock_start_index, stock_end_index,
+            gate_input_end_index, gate_input_start_index,
+            ind_index_column, ind_gate_start_index, ind_gate_end_index,
             T_dropout_rate, S_dropout_rate, beta, **kwargs,
     ):
         super(MASTERModel, self).__init__(**kwargs)
         self.d_model = d_model
         self.d_feat = d_feat
-
+        self.stock_start_index = stock_start_index
+        self.stock_end_index = stock_end_index
         self.gate_input_start_index = gate_input_start_index
         self.gate_input_end_index = gate_input_end_index
         
         ### Ind Gate ##############################################################################
         self.ind_index_column = ind_index_column
-        self.ind_gate_input_start_index = ind_gate_input_start_index
-        self.ind_gate_input_end_index = ind_gate_input_end_index        
+        self.ind_gate_start_index = ind_gate_start_index
+        self.ind_gate_end_index = ind_gate_end_index      
         ###########################################################################################
 
         self.T_dropout_rate = T_dropout_rate
@@ -281,9 +288,9 @@ class MASTERModel(SequenceModel):
 
     def init_model(self):
         self.model = MASTER(d_feat=self.d_feat, d_model=self.d_model, t_nhead=self.t_nhead, s_nhead=self.s_nhead,
-                                   T_dropout_rate=self.T_dropout_rate, S_dropout_rate=self.S_dropout_rate,
-                                   gate_input_start_index=self.gate_input_start_index,
-                                   gate_input_end_index=self.gate_input_end_index, beta=self.beta,
-                                   ind_index_column=self.ind_index_column, ind_gate_input_start_index =self.ind_gate_input_start_index,
-                                   ind_gate_input_end_index= self.ind_gate_input_end_index)
+                                   T_dropout_rate=self.T_dropout_rate, S_dropout_rate=self.S_dropout_rate,beta=self.beta,
+                                   stock_start_index = self.stock_start_index, stock_end_index = self.stock_end_index,
+                                   gate_input_start_index=self.gate_input_start_index, gate_input_end_index=self.gate_input_end_index, 
+                                   ind_index_column=self.ind_index_column, ind_gate_start_index =self.ind_gate_start_index,
+                                   ind_gate_end_index= self.ind_gate_end_index)
         super(MASTERModel, self).init_model()
