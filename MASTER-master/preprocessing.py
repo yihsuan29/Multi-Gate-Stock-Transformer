@@ -30,9 +30,8 @@ def data_preprocessing(stock_path, market_path):
     df_merged['alpha084'].replace([np.inf, -np.inf], np.nan)
     q99 = df_merged['alpha084'].quantile(0.99)
     df_merged['alpha084'] = df_merged['alpha084'].clip(upper=q99)
-    df_merged['alpha084_log'] = np.log(df_merged['alpha084'] + 1e-6)
-    
-    df_merged = df_merged.fillna(0) #將NaN值填充為0
+    df_merged['alpha084'] = np.log(df_merged['alpha084'] + 1e-6)
+    df_merged = df_merged.ffill() #將NaN值填充為前一個有效值
 
     columns_to_remove = ["TICKER", "COMNAM", "SICCD", "NCUSIP", "CUSIP"]
     df_merged = df_merged.drop(columns_to_remove, axis=1)

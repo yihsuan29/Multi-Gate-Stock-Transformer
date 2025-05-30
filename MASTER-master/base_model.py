@@ -9,6 +9,7 @@ from torch.utils.data import Sampler
 import torch
 import torch.optim as optim
 from tqdm import tqdm
+from torch.utils.tensorboard import SummaryWriter
 
 class StockWindowDataset4D(Dataset):
     def __init__(self, df, feature_columns, label_column='label', window_size=8):
@@ -54,7 +55,7 @@ class StockWindowDataset4D(Dataset):
         # 準備 output tensor shape: [N, W, F]
         # W維度是window size，N是股票數量，F是feature數量
         x = np.zeros((self.N, self.window_size, self.F), dtype=np.float64)
-        y = np.zeros((self.N,), dtype=np.float64)  # label對應每支股票
+
 
         for i, stock in enumerate(self.stocks):
             for j, w_date in enumerate(window_dates):
@@ -67,9 +68,9 @@ class StockWindowDataset4D(Dataset):
 
             # 當天label
 
-        # 這邊輸出維度是 [N, W, F]
-        # 如果想要最終維度是 [D, N, W, F]，那要用 DataLoader batch
-        # 一個batch裡面放多個日期 (D個) 就會變成 (D, N, W, F)
+        # 這邊輸出維度是 [N, T, F]
+        # 如果想要最終維度是 [D, N, T, F]，那要用 DataLoader batch
+        # 一個batch裡面放多個日期 (D個) 就會變成 (D, N, T, F)
         return torch.tensor(x)
     
     
@@ -140,7 +141,7 @@ class SequenceModel():
 
         self.save_path = save_path
         self.save_prefix = save_prefix
-
+        self.writer = SummaryWriter(log_dir=f"./runs/{self.save_prefix}_{self.seed}")
 
     def init_model(self):
         if self.model is None:
@@ -182,7 +183,7 @@ class SequenceModel():
             pred = self.model(feature.float())
             loss = self.loss_fn(pred, label)
             losses.append(loss.item())
-
+            
             self.train_optimizer.zero_grad()
             loss.backward()
             torch.nn.utils.clip_grad_value_(self.model.parameters(), 3.0)
@@ -220,7 +221,7 @@ class SequenceModel():
         self.fitted = 'Previously trained.'
 
     def fit(self, dl_train, dl_valid=None):
-        print("training started.")
+        print("Training Started.")
         # feature_columns = dl_train.get_feature_columns().drop(["PERMNO","TICKER","COMNAM", "date", "SICCD", "NCUSIP","CUSIP"])
         columns_to_remove = ["PERMNO", "date"]
         feature_columns = [col for col in dl_train.columns if col not in columns_to_remove]
@@ -228,9 +229,14 @@ class SequenceModel():
         best_param = None
         for step in range(self.n_epochs):
             train_loss = self.train_epoch(train_loader, step)
+            self.writer.add_scalar('Loss/Train', train_loss, step)
             self.fitted = step
             if dl_valid:
                 predictions, metrics = self.predict(dl_valid)
+                self.writer.add_scalar('Metrics/IC', metrics['IC'], step)
+                self.writer.add_scalar('Metrics/ICIR', metrics['ICIR'], step)
+                self.writer.add_scalar('Metrics/RIC', metrics['RIC'], step)
+                self.writer.add_scalar('Metrics/RICIR', metrics['RICIR'], step)
                 print("Epoch %d, train_loss %.6f, valid ic %.4f, icir %.3f, rankic %.4f, rankicir %.3f." % (step, train_loss, metrics['IC'],  metrics['ICIR'],  metrics['RIC'],  metrics['RICIR']))
             else: print("Epoch %d, train_loss %.6f" % (step, train_loss))
         
