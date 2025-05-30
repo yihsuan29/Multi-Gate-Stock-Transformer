@@ -1,52 +1,41 @@
-'''
-Code from MASTER "https://github.com/SJTU-DMTai/MASTER/blob/master"
-'''
-
 from master import MASTERModel
 import pickle
 import numpy as np
 import time
-
+import pandas as pd
+import torch
+from preprocessing import *
+import os
 # Please install qlib first before load the data.
 
-universe = 'csi300' # ['csi300','csi800']
-prefix = 'opensource' # ['original','opensource'], which training data are you using
-train_data_dir = f'data'
-with open(f'{train_data_dir}\{prefix}\{universe}_dl_train.pkl', 'rb') as f:
-    dl_train = pickle.load(f)
+data_dir = f'../Data/Preprocessed' # 'data' or 'Preprocessed'
+market = 'SP500' # ['Market','SP500']
 
-predict_data_dir = f'data\opensource'
-with open(f'{predict_data_dir}\{universe}_dl_valid.pkl', 'rb') as f:
-    dl_valid = pickle.load(f)
-with open(f'{predict_data_dir}\{universe}_dl_test.pkl', 'rb') as f:
-    dl_test = pickle.load(f)
+df_train, df_test, stock_start, stock_end, gate_start,gate_end, ind_index,ind_start,ind_end =\
+    data_preprocessing(f"./{data_dir}/CRSP_alpha_filtered.pqt", f"./{data_dir}/{market}_feature.pqt",
+                       f"./{data_dir}/Ind_feature.pqt",f"./{data_dir}/Fama12_mapping.csv" ) 
+# OPENPRC
 
 print("Data Loaded.")
 
 
-d_feat = 158 #[alpha001~alpha101 + ravenpack]
-d_model = 256
+d_feat = stock_end - stock_start + 1
+d_model = 128
 t_nhead = 4
 s_nhead = 2
 dropout = 0.5
-gate_input_start_index = 158 #[market retuen]
-gate_input_end_index = 221 #[macro 最後一個 ravenpack]
-ind_index_column = 'fama12'
-ind_gate_input_start_index = 222 #[industry return]
-ind_gate_input_end_index =-1 #[industry mean return]
+stock_start_index = stock_start-2
+stock_end_index = stock_end-2
+gate_input_start_index = gate_start-2
+gate_input_end_index = gate_end-2
+ind_index_column = ind_index-2
+ind_gate_start_index = ind_start-2 
+ind_gate_end_index = ind_end-2
 
-"""
-train dataset
-[identifier |individual features(alpha + rav)|market features(sp500 + macro) | fama12 index | industry features (return)]
-"""
+beta = 5
 
-if universe == 'csi300':
-    beta = 5
-elif universe == 'csi800':
-    beta = 2
-
-n_epoch = 1
-lr = 1e-5
+n_epoch = 100
+lr = 1e-6
 GPU = 0
 train_stop_loss_thred = 0.95
 
@@ -56,24 +45,29 @@ icir = []
 ric = []
 ricir = []
 
+save_path = 'model'
+os.makedirs(save_path, exist_ok=True)
+
 # Training
 ######################################################################################
-'''for seed in [0, 1, 2, 3, 4]:
+for seed in [0, 1, 2, 3, 4]:
     model = MASTERModel(
         d_feat = d_feat, d_model = d_model, t_nhead = t_nhead, s_nhead = s_nhead, T_dropout_rate=dropout, S_dropout_rate=dropout,
-        beta=beta, gate_input_end_index=gate_input_end_index, gate_input_start_index=gate_input_start_index,
+        beta=beta, stock_start_index = stock_start_index , stock_end_index = stock_end_index,
+        gate_input_end_index=gate_input_end_index, gate_input_start_index=gate_input_start_index,
+        ind_index_column = ind_index_column, ind_gate_start_index = ind_gate_start_index, ind_gate_end_index = ind_gate_end_index,        
         n_epochs=n_epoch, lr = lr, GPU = GPU, seed = seed, train_stop_loss_thred = train_stop_loss_thred,
-        save_path='model', save_prefix=f'{universe}_{prefix}'
+        save_path=save_path, save_prefix=f'{market}'
     )
 
     start = time.time()
     # Train
-    model.fit(dl_train, dl_valid)
-
+    # model.fit(df_train, df_valid)
+    model.fit(df_train)
     print("Model Trained.")
 
     # Test
-    predictions, metrics = model.predict(dl_test)
+    predictions, metrics = model.predict(df_test)
     
     running_time = time.time()-start
     
@@ -83,29 +77,29 @@ ricir = []
     ic.append(metrics['IC'])
     icir.append(metrics['ICIR'])
     ric.append(metrics['RIC'])
-    ricir.append(metrics['RICIR'])'''
+    ricir.append(metrics['RICIR'])
 ######################################################################################
 
 # Load and Test
 ######################################################################################
-for seed in [0]:
-    param_path = f'model\{universe}_{prefix}_{seed}.pkl'
+# for seed in [0]:
+#     param_path = f'model\{universe}_{prefix}_{seed}.pkl'
 
-    print(f'Model Loaded from {param_path}')
-    model = MASTERModel(
-            d_feat = d_feat, d_model = d_model, t_nhead = t_nhead, s_nhead = s_nhead, T_dropout_rate=dropout, S_dropout_rate=dropout,
-            beta=beta, gate_input_end_index=gate_input_end_index, gate_input_start_index=gate_input_start_index,
-            n_epochs=n_epoch, lr = lr, GPU = GPU, seed = seed, train_stop_loss_thred = train_stop_loss_thred,
-            save_path='model/', save_prefix=universe
-        )
-    model.load_param(param_path)
-    predictions, metrics = model.predict(dl_test)
-    print(metrics)
+#     print(f'Model Loaded from {param_path}')
+#     model = MASTERModel(
+#             d_feat = d_feat, d_model = d_model, t_nhead = t_nhead, s_nhead = s_nhead, T_dropout_rate=dropout, S_dropout_rate=dropout,
+#             beta=beta, gate_input_end_index=gate_input_end_index, gate_input_start_index=gate_input_start_index,
+#             n_epochs=n_epoch, lr = lr, GPU = GPU, seed = seed, train_stop_loss_thred = train_stop_loss_thred,
+#             save_path='model/', save_prefix=universe
+#         )
+#     model.load_param(param_path)
+#     predictions, metrics = model.predict(dl_test)
+#     print(metrics)
 
-    ic.append(metrics['IC'])
-    icir.append(metrics['ICIR'])
-    ric.append(metrics['RIC'])
-    ricir.append(metrics['RICIR'])
+#     ic.append(metrics['IC'])
+#     icir.append(metrics['ICIR'])
+#     ric.append(metrics['RIC'])
+#     ricir.append(metrics['RICIR'])
     
 ######################################################################################
 
