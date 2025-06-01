@@ -9,6 +9,7 @@ from torch.utils.data import Sampler
 import torch
 import torch.optim as optim
 from tqdm import tqdm
+from sklearn.metrics import root_mean_squared_error
 
 class StockWindowDataset4D(Dataset):
     def __init__(self, df, feature_columns, label_column='label', window_size=8):
@@ -174,9 +175,9 @@ class SequenceModel():
             # If you use original data to train, you won't need the following lines because we already drop extreme when we dumped the data.
             # If you use the opensource data to train, use the following lines to drop extreme labels.
             #########################
-            mask, label = drop_extreme(label)
-            feature = feature[mask, :, :]
-            label = zscore(label) # CSZscoreNorm
+            # mask, label = drop_extreme(label)
+            # feature = feature[mask, :, :]
+            # label = zscore(label) # CSZscoreNorm
             #########################
 
             pred = self.model(feature.float())
@@ -200,7 +201,7 @@ class SequenceModel():
             label = data[:, -1, -1].to(self.device)
 
             # You cannot drop extreme labels for test. 
-            label = zscore(label)
+            # label = zscore(label)
                         
             pred = self.model(feature.float())
             loss = self.loss_fn(pred, label)
@@ -234,10 +235,9 @@ class SequenceModel():
                 print("Epoch %d, train_loss %.6f, valid ic %.4f, icir %.3f, rankic %.4f, rankicir %.3f." % (step, train_loss, metrics['IC'],  metrics['ICIR'],  metrics['RIC'],  metrics['RICIR']))
             else: print("Epoch %d, train_loss %.6f" % (step, train_loss))
         
-            if train_loss <= self.train_stop_loss_thred:
-                best_param = copy.deepcopy(self.model.state_dict())
-                torch.save(best_param, f'{self.save_path}/{self.save_prefix}_{self.seed}.pkl')
-                break
+
+        best_param = copy.deepcopy(self.model.state_dict())
+        torch.save(best_param, f'{self.save_path}/{self.save_prefix}_{self.seed}.pkl')
         
 
         
@@ -254,6 +254,7 @@ class SequenceModel():
         test_loader = self._init_data_loader(dl_test, feature_columns, shuffle=False, drop_last=False)
 
         preds = []
+        labels = []
         ic = []
         ric = []
 
@@ -269,18 +270,25 @@ class SequenceModel():
             with torch.no_grad():
                 pred = self.model(feature.float()).detach().cpu().numpy()
             preds.append(pred.ravel())
+            labels.append(label.detach().numpy())
 
             daily_ic, daily_ric = calc_ic(pred, label.detach().numpy())
             ic.append(daily_ic)
             ric.append(daily_ric)
 
+
+        predictions = np.concatenate(preds)
+        targets = np.concatenate(labels)
+        rmse = root_mean_squared_error(targets, predictions)
+        
         predictions = pd.Series(np.concatenate(preds), index=dl_test_filtered.index)
 
         metrics = {
             'IC': np.mean(ic),
             'ICIR': np.mean(ic)/np.std(ic),
             'RIC': np.mean(ric),
-            'RICIR': np.mean(ric)/np.std(ric)
+            'RICIR': np.mean(ric)/np.std(ric),
+            'RMSE':np.mean(rmse)
         }
 
         return predictions, metrics

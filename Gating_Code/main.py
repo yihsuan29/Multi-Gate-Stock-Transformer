@@ -9,7 +9,7 @@ import os
 # Please install qlib first before load the data.
 
 data_dir = f'../Data/Preprocessed' # 'data' or 'Preprocessed'
-market = 'SP500' # ['Market','SP500']
+market = 'Market' # ['Market','SP500']
 
 df_train, df_test, stock_start, stock_end, gate_start,gate_end, ind_index,ind_start,ind_end =\
     data_preprocessing(f"./{data_dir}/CRSP_alpha_filtered.pqt", f"./{data_dir}/{market}_feature.pqt",
@@ -32,25 +32,26 @@ ind_index_column = ind_index-2
 ind_gate_start_index = ind_start-2 
 ind_gate_end_index = ind_end-2
 
-beta = 5
+beta = 4
 
-n_epoch = 100
+n_epoch = 1
 lr = 1e-6
 GPU = 0
-train_stop_loss_thred = 0.95
+train_stop_loss_thred = 0
 
 
 ic = []
 icir = []
 ric = []
 ricir = []
+rmse = []
 
-save_path = 'model'
+save_path = 'model/test1'
 os.makedirs(save_path, exist_ok=True)
 
 # Training
 ######################################################################################
-for seed in [0, 1, 2, 3, 4]:
+for seed in [0]:
     model = MASTERModel(
         d_feat = d_feat, d_model = d_model, t_nhead = t_nhead, s_nhead = s_nhead, T_dropout_rate=dropout, S_dropout_rate=dropout,
         beta=beta, stock_start_index = stock_start_index , stock_end_index = stock_end_index,
@@ -78,6 +79,7 @@ for seed in [0, 1, 2, 3, 4]:
     icir.append(metrics['ICIR'])
     ric.append(metrics['RIC'])
     ricir.append(metrics['RICIR'])
+    rmse.append(metrics['RMSE'])
 ######################################################################################
 
 # Load and Test
@@ -107,3 +109,4 @@ print("IC: {:.4f} pm {:.4f}".format(np.mean(ic), np.std(ic)))
 print("ICIR: {:.4f} pm {:.4f}".format(np.mean(icir), np.std(icir)))
 print("RIC: {:.4f} pm {:.4f}".format(np.mean(ric), np.std(ric)))
 print("RICIR: {:.4f} pm {:.4f}".format(np.mean(ricir), np.std(ricir)))
+print("RMSE: {:.4f} pm {:.4f}".format(np.mean(rmse), np.std(rmse)))

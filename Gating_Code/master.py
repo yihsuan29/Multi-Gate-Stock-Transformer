@@ -213,16 +213,16 @@ class MASTER(nn.Module):
         self.feature_gate = Gate(self.d_gate_input, d_feat, beta=beta)
         
         ### Ind Gate ##############################################################################
-        self.ind_index_column = ind_index_column
-        self.ind_gate_start_index = ind_gate_start_index
-        self.ind_gate_end_index = ind_gate_end_index     
-        self.d_industry_input = (ind_gate_end_index - ind_gate_start_index +1)
-        self.industry_gate = IndustryGate(
-            n_industries=12,
-            d_input=self.d_industry_input,
-            d_output=d_feat,
-            beta=beta
-        )
+        # self.ind_index_column = ind_index_column
+        # self.ind_gate_start_index = ind_gate_start_index
+        # self.ind_gate_end_index = ind_gate_end_index     
+        # self.d_industry_input = (ind_gate_end_index - ind_gate_start_index +1)
+        # self.industry_gate = IndustryGate(
+        #     n_industries=12,
+        #     d_input=self.d_industry_input,
+        #     d_output=d_feat,
+        #     beta=beta
+        # )
         ###########################################################################################
 
         self.layers = nn.Sequential(
@@ -244,12 +244,12 @@ class MASTER(nn.Module):
         alpha_market = self.feature_gate(gate_input)
         
         ### Ind Gate ##############################################################################
-        ind_ids = x[:, -1, self.ind_index_column].long() 
-        ind_input = x[:, -1, self.ind_gate_start_index: self.ind_gate_end_index+1] 
-        alpha_industry = self.industry_gate(ind_input, ind_ids) 
+        # ind_ids = x[:, -1, self.ind_index_column].long() 
+        # ind_input = x[:, -1, self.ind_gate_start_index: self.ind_gate_end_index+1] 
+        # alpha_industry = self.industry_gate(ind_input, ind_ids) 
 
         ###########################################################################################    
-        alpha = alpha_market * alpha_industry
+        alpha = alpha_market #* alpha_industry
         src = src * torch.unsqueeze(alpha, dim=1)
        
         output = self.layers(src).squeeze(-1)
