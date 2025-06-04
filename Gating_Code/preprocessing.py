@@ -2,8 +2,7 @@ import pandas as pd
 import numpy as np
 
 
-data_dir = f'data'
-market = 'SP500' # ['Market','SP500']
+
 
 def data_preprocessing(stock_path, market_path, industry_path=None, mapping_path = None, news_path=None):
     
@@ -55,17 +54,18 @@ def data_preprocessing(stock_path, market_path, industry_path=None, mapping_path
     #     print(f"col{i}:{col}")
     #     i+=1
         
-    stock_start = df_merged.columns.get_loc('OPENPRC')
-    stock_end = df_merged.columns.get_loc('alpha101')
+    stock_start = df_merged.columns.get_loc('alpha001')
+    stock_end = df_merged.columns.get_loc('alpha101')#('alpha101')('total_news_count')
     gate_start = df_merged.columns.get_loc('Return')
-    gate_end = df_merged.columns.get_loc('StdTurnover_60')
+    gate_end = df_merged.columns.get_loc('MCQ')#('MCQ') #('StdTurnover_60')
     ind_index = df_merged.columns.get_loc('fama12')
     ind_start = df_merged.columns.get_loc('ind_return')
     ind_end = df_merged.columns.get_loc('Ind_StdReturn_60')
     # print(f"{stock_start, stock_end, gate_start,gate_end, ind_index,ind_start,ind_end}")
 
-    df_train = df_merged[df_merged['date'] < '2020-01-01']
-    df_test = df_merged[df_merged['date'] >= '2020-01-01']
+    df_train = df_merged[df_merged['date'] < '2018-01-01']
+    #df_test = df_merged[(df_merged['date'] >= '2022-01-01')]
+    df_test = df_merged[(df_merged['date'] >= '2018-01-01')& (df_merged['date'] <= '2018-12-31')]
 
     return df_train, df_test,stock_start, stock_end, gate_start,gate_end, ind_index,ind_start,ind_end
 

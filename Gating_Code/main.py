@@ -12,7 +12,7 @@ data_dir = f'../Data/Preprocessed' # 'data' or 'Preprocessed'
 market = 'Market' # ['Market','SP500']
 
 df_train, df_test, stock_start, stock_end, gate_start,gate_end, ind_index,ind_start,ind_end =\
-    data_preprocessing(f"./{data_dir}/CRSP_alpha_filtered.pqt", f"./{data_dir}/{market}_feature.pqt",
+    data_preprocessing(f"./{data_dir}/CRSP_alpha_news.pqt", f"./{data_dir}/{market}_feature.pqt",
                        f"./{data_dir}/Ind_feature.pqt",f"./{data_dir}/Fama12_mapping.csv" ) 
 # OPENPRC
 
@@ -23,7 +23,7 @@ d_feat = stock_end - stock_start + 1
 d_model = 128
 t_nhead = 4
 s_nhead = 2
-dropout = 0.5
+dropout = 0.6
 stock_start_index = stock_start-2
 stock_end_index = stock_end-2
 gate_input_start_index = gate_start-2
@@ -34,7 +34,7 @@ ind_gate_end_index = ind_end-2
 
 beta = 4
 
-n_epoch = 1
+n_epoch = 20
 lr = 1e-6
 GPU = 0
 train_stop_loss_thred = 0
@@ -46,7 +46,7 @@ ric = []
 ricir = []
 rmse = []
 
-save_path = 'model/test1'
+save_path = 'model/result07-22/gate1'
 os.makedirs(save_path, exist_ok=True)
 
 # Training

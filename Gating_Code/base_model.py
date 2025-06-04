@@ -12,7 +12,7 @@ from tqdm import tqdm
 from sklearn.metrics import root_mean_squared_error
 
 class StockWindowDataset4D(Dataset):
-    def __init__(self, df, feature_columns, label_column='label', window_size=8):
+    def __init__(self, df, feature_columns, label_column='label', window_size=10):
         self.df = df.copy()
         self.feature_columns = feature_columns
         self.label_column = label_column
@@ -243,7 +243,7 @@ class SequenceModel():
         
 
     def predict(self, dl_test):
-        dl_test_filtered = dl_test.groupby('PERMNO').apply(lambda x: x.iloc[8:]).reset_index(drop=True)
+        dl_test_filtered = dl_test.groupby('PERMNO').apply(lambda x: x.iloc[10:]).reset_index(drop=True)
         columns_to_remove = ["PERMNO", "date"]
         feature_columns = [col for col in dl_test.columns if col not in columns_to_remove]
         if self.fitted<0:
