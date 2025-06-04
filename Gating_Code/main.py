@@ -23,7 +23,7 @@ d_feat = stock_end - stock_start + 1
 d_model = 128
 t_nhead = 4
 s_nhead = 2
-dropout = 0.6
+dropout = 0.5
 stock_start_index = stock_start-2
 stock_end_index = stock_end-2
 gate_input_start_index = gate_start-2
@@ -45,6 +45,7 @@ icir = []
 ric = []
 ricir = []
 rmse = []
+mae = []
 
 save_path = 'model/result07-22/gate1'
 os.makedirs(save_path, exist_ok=True)
@@ -80,6 +81,7 @@ for seed in [0]:
     ric.append(metrics['RIC'])
     ricir.append(metrics['RICIR'])
     rmse.append(metrics['RMSE'])
+    mae.append(metrics['MAE'])
 ######################################################################################
 
 # Load and Test
@@ -110,3 +112,4 @@ print("ICIR: {:.4f} pm {:.4f}".format(np.mean(icir), np.std(icir)))
 print("RIC: {:.4f} pm {:.4f}".format(np.mean(ric), np.std(ric)))
 print("RICIR: {:.4f} pm {:.4f}".format(np.mean(ricir), np.std(ricir)))
 print("RMSE: {:.4f} pm {:.4f}".format(np.mean(rmse), np.std(rmse)))
+print("MAE: {:.4f} pm {:.4f}".format(np.mean(mae), np.std(mae)))

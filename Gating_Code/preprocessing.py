@@ -63,9 +63,9 @@ def data_preprocessing(stock_path, market_path, industry_path=None, mapping_path
     ind_end = df_merged.columns.get_loc('Ind_StdReturn_60')
     # print(f"{stock_start, stock_end, gate_start,gate_end, ind_index,ind_start,ind_end}")
 
-    df_train = df_merged[df_merged['date'] < '2018-01-01']
-    #df_test = df_merged[(df_merged['date'] >= '2022-01-01')]
-    df_test = df_merged[(df_merged['date'] >= '2018-01-01')& (df_merged['date'] <= '2018-12-31')]
+    df_train = df_merged[df_merged['date'] < '2022-01-01']
+    df_test = df_merged[(df_merged['date'] >= '2022-01-01')]
+    #df_test = df_merged[(df_merged['date'] >= '2018-01-01')& (df_merged['date'] <= '2018-12-31')]
 
     return df_train, df_test,stock_start, stock_end, gate_start,gate_end, ind_index,ind_start,ind_end
 

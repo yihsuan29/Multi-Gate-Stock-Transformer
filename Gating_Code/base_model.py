@@ -9,7 +9,7 @@ from torch.utils.data import Sampler
 import torch
 import torch.optim as optim
 from tqdm import tqdm
-from sklearn.metrics import root_mean_squared_error
+from sklearn.metrics import root_mean_squared_error,mean_absolute_error
 
 class StockWindowDataset4D(Dataset):
     def __init__(self, df, feature_columns, label_column='label', window_size=10):
@@ -280,6 +280,7 @@ class SequenceModel():
         predictions = np.concatenate(preds)
         targets = np.concatenate(labels)
         rmse = root_mean_squared_error(targets, predictions)
+        mae = mean_absolute_error(targets, predictions)
         
         predictions = pd.Series(np.concatenate(preds), index=dl_test_filtered.index)
 
@@ -288,7 +289,8 @@ class SequenceModel():
             'ICIR': np.mean(ic)/np.std(ic),
             'RIC': np.mean(ric),
             'RICIR': np.mean(ric)/np.std(ric),
-            'RMSE':np.mean(rmse)
+            'RMSE':np.mean(rmse),
+            'MAE':np.mean(mae)
         }
 
         return predictions, metrics
