@@ -15,7 +15,7 @@ Our modifications:
 <img width="1531" height="609" alt="image" src="https://github.com/user-attachments/assets/ce580989-882b-4e68-9f7b-f4f791d0538c" />
 
 ## Experimental Setup
-- **Stocks**: 8 firms × 9 industries = 72 stocks  
+- **Stocks**: 8 firms × 9 industries = 72 stocks from S&P 500 constituents
 - **Dataset Splits**:  
   1. **Full period (following MASTER paper)**  
      - Training: 2008–2022  
