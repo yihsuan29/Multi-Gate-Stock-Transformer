@@ -1,4 +1,4 @@
-# Multi-Gates Market-Guided Stock Transformer  
+# Multi-Gates-Guided Stock Transformer  
 NYCU Deep Learning Final Project
 
 This project implements a modified version of the AAAI-2024 paper [MASTER: Market-Guided Stock Transformer for Stock Price Forecasting](https://ojs.aaai.org/index.php/AAAI/article/view/27767), aiming to improve stock price prediction by incorporating richer market information and additional gating mechanisms.  
