@@ -41,4 +41,4 @@ Our modifications:
 | MAE    | 0.0129   | **0.0120**     | 0.0122  | 0.0125  | 0.0126  |
 
 ### Performance Improvement:  
-- 5–6% RMSE reduction observed in both 2018 and 2023 testing periods 
+5–6% RMSE reduction observed in both 2018 and 2023 testing periods 
